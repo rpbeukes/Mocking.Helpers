@@ -7,7 +7,6 @@ namespace Mocking.Helpers
 {
     public static class PackagesHelper
     {
-        // btw, feel free to refactor, just a quick test
         public static IEnumerable<string> GetProjectNugetPackages(Project project)
         {
             var nugetPackages = new List<string>();
