@@ -49,10 +49,10 @@ jobs:
         run:  msbuild Mocking.Helpers.sln -t:rebuild -property:Configuration=Release
 
       - name: rename Mocking.Helpers.vsix to Mocking.Helpers.W.X.Y.Z.vsix
-        run:  ren ${{ github.workspace }}\Mocking.Helpers\Mocking.Helpers.Vsix\bin\Release\net472\Mocking.Helpers.vsix Mocking.Helpers.${{ env.APP_VERSION }}.vsix
+        run:  ren ${{ github.workspace }}\Mocking.Helpers\Mocking.Helpers.vsix\bin\Release\Mocking.Helpers.vsix Mocking.Helpers.${{ env.APP_VERSION }}.vsix
 
       - name: create artifact
         uses: actions/upload-artifact@v3
         with:
           name: Mocking.Helpers.${{ env.APP_VERSION }}.vsix
-          path: ${{ github.workspace }}\Mocking.Helpers\Mocking.Helpers.Vsix\bin\Release\net472\Mocking.Helpers.${{ env.APP_VERSION }}.vsix
+          path: ${{ github.workspace }}\Mocking.Helpers\Mocking.Helpers.vsix\bin\Release\Mocking.Helpers.${{ env.APP_VERSION }}.vsix
