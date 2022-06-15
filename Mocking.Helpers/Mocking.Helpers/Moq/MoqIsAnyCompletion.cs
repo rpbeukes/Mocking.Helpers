@@ -26,7 +26,8 @@ namespace Mocking.Helpers.Moq
             {
                 if (!context.Document.SupportsSemanticModel || !context.Document.SupportsSyntaxTree) return;
 
-                var hasMoqReferenced = context.Document.Project.MetadataReferences.Any(r => r.Display.Contains(this._provider.AssemblyName));
+                var hasMoqReferenced = PackagesHelper.GetProjectNugetPackages(context.Document.Project).Any(x => x.Equals(this._provider.AssemblyName, StringComparison.InvariantCultureIgnoreCase));
+
                 if (!hasMoqReferenced) return;
 
                 var syntaxRoot = await context.Document.GetSyntaxRootAsync();
