@@ -26,7 +26,8 @@ namespace Mocking.Helpers.NSubstitute
             {
                 if (!context.Document.SupportsSemanticModel || !context.Document.SupportsSyntaxTree) return;
 
-                var hasNSubstituteReferenced = context.Document.Project.MetadataReferences.Any(r => r.Display.Contains(this._provider.AssemblyName));
+                var hasNSubstituteReferenced = PackagesHelper.GetProjectNugetPackages(context.Document.Project).Any(x => x.Equals(this._provider.AssemblyName, StringComparison.InvariantCultureIgnoreCase));
+
                 if (!hasNSubstituteReferenced) return;
 
                 var syntaxRoot = await context.Document.GetSyntaxRootAsync();

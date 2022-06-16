@@ -30,7 +30,7 @@ namespace Mocking.Helpers.FakeItEasy
             {
                 if (!context.Document.SupportsSemanticModel || !context.Document.SupportsSyntaxTree) return;
 
-                var hasFakeItEasyReferenced = context.Document.Project.MetadataReferences.Any(r => r.Display.Contains(this._provider.AssemblyName));
+                var hasFakeItEasyReferenced = PackagesHelper.GetProjectNugetPackages(context.Document.Project).Any(x => x.Equals(this._provider.AssemblyName, StringComparison.InvariantCultureIgnoreCase));
                 if (!hasFakeItEasyReferenced) return;
 
                 var syntaxRoot = await context.Document.GetSyntaxRootAsync();
