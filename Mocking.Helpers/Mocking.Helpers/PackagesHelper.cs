@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
@@ -10,13 +11,15 @@ namespace Mocking.Helpers
     {
         public static IEnumerable<string> GetProjectNugetPackages(Project project)
         {
+            var nugetPackages = new List<string>();
             var csproj = new XmlDocument();
             csproj.Load(project.FilePath);
-           
-            var nugetPackages = csproj.SelectNodes("//PackageReference[@Include and @Version]")
-                                      .OfType<XmlNode>()
-                                      .Select(x => x.Attributes["Include"].Value)
-                                      .ToList();
+            var nodes = csproj.SelectNodes("//PackageReference[@Include and @Version]");
+            foreach (XmlNode packageReference in nodes)
+            {
+                var packageName = packageReference.Attributes["Include"].Value;
+                nugetPackages.Add(packageName);
+            }
 
             return nugetPackages;
         }
